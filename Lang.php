@@ -52,4 +52,59 @@ class Lang
             
         return 1;
     }
+    
+    //STATIC FOR MANAGEMENT
+        
+    public static function addLanguage($lang, $id)
+    {
+        if($lang == '')
+        {
+            echo 'Missing parameter - language!';
+            return 0;
+        }
+            
+        try
+        {
+            $file = 'lang.json';
+            $languages = json_decode(file_get_contents($file,true),true);
+
+            array_push($languages,['id' => (int)$id, 'lang' => strtolower($lang)]);
+
+            file_put_contents($file, json_encode($languages),FILE_USE_INCLUDE_PATH);
+
+            echo 'Success!';
+                
+        } 
+        catch (Exception $ex) 
+        {
+            echo 'Failed';
+        }
+    }
+        
+    public static function deleteLanguage($deleteLanguage, $id)
+    {
+        $file = 'lang.json';
+        $languages = json_decode(file_get_contents($file,true),true);
+        $deleted = false;
+            
+        foreach($languages as $key => $language)
+        {
+            if($language['lang'] == $deleteLanguage && $language['id'] == (int)$id) 
+            {
+                unset($languages[$key]);
+                $deleted = true;
+            }
+        }
+            
+        file_put_contents($file, json_encode($languages),FILE_USE_INCLUDE_PATH);
+            
+        if($deleted) 
+        {
+            echo 'Success!';
+        }
+        else
+        {
+            echo 'Nothing found for remove!';
+        }
+    }
 }
