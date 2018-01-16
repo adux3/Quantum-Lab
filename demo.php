@@ -1,7 +1,7 @@
 <?php
 
-require '../People.php';
-require '../Lang.php';
+require '../class/People.php';
+require '../class/Lang.php';
 
 use People\People as People;
 use Lang\Lang as Lang;

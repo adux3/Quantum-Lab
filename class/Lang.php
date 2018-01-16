@@ -4,12 +4,12 @@ namespace Lang;
 
 class Lang
 {
-    private $user_id;
+    private $userId;
     private $languages;
 
-    public function __construct($user_id)
+    public function __construct($userId)
     {
-        $this -> user_id = $user_id;
+        $this -> userId = $userId;
         $this -> importPersonLanguagesFromDB();
     }
         
@@ -35,14 +35,14 @@ class Lang
 
     private function importPersonLanguagesFromDB()
     {
-        $file = 'lang.json';
+        $file = '../json/lang.json';
         $lang = json_decode(file_get_contents($file,true),true);
             
         $response = null;
             
         foreach($lang as $row)
         {
-            if($row['id'] === $this -> user_id)
+            if($row['id'] === $this -> userId)
             {
                 $response[] = $row['lang'];
             }
@@ -65,7 +65,7 @@ class Lang
             
         try
         {
-            $file = 'lang.json';
+            $file = '../json/lang.json';
             $languages = json_decode(file_get_contents($file,true),true);
 
             array_push($languages,['id' => (int)$id, 'lang' => strtolower($lang)]);
@@ -83,7 +83,7 @@ class Lang
         
     public static function deleteLanguage($deleteLanguage, $id)
     {
-        $file = 'lang.json';
+        $file = '../json/lang.json';
         $languages = json_decode(file_get_contents($file,true),true);
         $deleted = false;
             

@@ -28,7 +28,7 @@ class People
     
     private static function getNewID()
     {
-        $file = 'peopleAI.json';
+        $file = '../json/peopleAI.json';
         $id = json_decode(file_get_contents($file,true),true)['new-id'];
             
         return $id;
@@ -40,7 +40,7 @@ class People
             
         $json = '{"new-id": '.$newID.'}';
             
-        $file = 'peopleAI.json';
+        $file = '../json/peopleAI.json';
             
         file_put_contents($file, $json,FILE_USE_INCLUDE_PATH);
     }
@@ -49,7 +49,7 @@ class People
         
     public static function getAllPerson()
     {
-        $file = 'people.json';
+        $file = '../json/people.json';
         $people = json_decode(file_get_contents($file,true),true);
         $response = null;
             
@@ -103,7 +103,7 @@ class People
         
     public static function addNewPerson($firstName, $lastName , $languages)
     {
-        $file = "people.json";
+        $file = "../json/people.json";
         $people = json_decode(file_get_contents($file,true),true);
             
         $new_id = People::getNewID();
@@ -112,7 +112,7 @@ class People
             
         file_put_contents($file, json_encode($people),FILE_USE_INCLUDE_PATH);
             
-        $file2 = 'lang.json';
+        $file2 = '../json/lang.json';
         $langList = json_decode(file_get_contents($file2,true),true);
         foreach($languages as $lang)
         {
@@ -129,7 +129,7 @@ class People
         
     public static function deletePerson($id)
     {
-        $file = "people.json";
+        $file = "../json/people.json";
         $people = json_decode(file_get_contents($file,true),true);
             
         foreach($people as $key => $person)
@@ -142,7 +142,7 @@ class People
             
         file_put_contents($file, json_encode($people),FILE_USE_INCLUDE_PATH);
             
-        $file2 = 'lang.json';
+        $file2 = '../json/lang.json';
         $languages = json_decode(file_get_contents($file2,true),true);
             
         foreach($languages as $key => $lang)
