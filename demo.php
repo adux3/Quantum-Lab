@@ -1,5 +1,4 @@
 <?php
-
 require '../class/People.php';
 require '../class/Lang.php';
 
@@ -12,27 +11,20 @@ if(!isset($_SERVER['argv'][1])){
 }
 
 switch($_SERVER['argv'][1]){
-    
     case 'list':
-        
         $allPeople = People::getAllPerson();
         
         foreach($allPeople as $row){
             echo $row->getPersonData();
         }
-        
-    break; 
-        
+        break; 
     case 'find':
         
         foreach(People::findPeopleByName($_SERVER['argv'][2]) as $row){
             echo $row->getPersonData();
         }
-        
-    break; 
-        
+        break; 
     case 'languages':
-    
         $languages = null;
         
         foreach($_SERVER['argv'] as $key => $row){
@@ -40,17 +32,13 @@ switch($_SERVER['argv'][1]){
                 $languages[] = $row;
             }
         }
-        
         $people = People::getPersonWithLang($languages);
         
         foreach ($people as $row){
             echo $row->getPersonData();
         }
-    
-    break; 
-    
+        break; 
     case 'addPerson':
-        
         $firstName = null;
         $lastName = null;
         $languages = null;
@@ -60,23 +48,17 @@ switch($_SERVER['argv'][1]){
             if($key === 3) $lastName = $row;
             if($key > 3) $languages[] = $row;
         }
-        
         People::addNewPerson($firstName,$lastName,$languages);
-        
         break;
-        
     case 'removePerson':
             People::deletePerson($_SERVER['argv'][2]);
         break;
-    
     case 'addLanguage':
             Lang::addLanguage($_SERVER['argv'][2],$_SERVER['argv'][3]);
         break;
-        
     case 'removeLanguage':
             Lang::deleteLanguage($_SERVER['argv'][2],$_SERVER['argv'][3]);
         break;
-    
     default:
         echo 'Wrong command!';
         break;
