@@ -9,17 +9,19 @@ class Lang
 
     public function __construct($userId)
     {
-        $this -> userId = $userId;
-        $this -> importPersonLanguagesFromDB();
+        $this->userId = $userId;
+        $this->importPersonLanguagesFromDB();
     }
         
     public function getPersonLanguages()
     {
         $response = '(';
             
-        foreach ($this -> languages as $key => $row)
-        {
-            if($key !== 0) $response .= ' , ';
+        foreach ($this->languages as $key => $row){
+            
+            if($key !== 0){
+                $response .= ' , ';
+            } 
                 
             $response .= $row;
         }
@@ -29,8 +31,12 @@ class Lang
         
     public function checkIfKnowLang($lang)
     {
-        if (in_array(strtolower($lang), array_map('strtolower', $this -> languages))) return 1;
-        else return 0;
+        if (in_array(strtolower($lang), array_map('strtolower', $this->languages))){
+            return 1;
+        }
+        else{
+            return 0;
+        }
     }
 
     private function importPersonLanguagesFromDB()
@@ -40,15 +46,14 @@ class Lang
             
         $response = null;
             
-        foreach($lang as $row)
-        {
-            if($row['id'] === $this -> userId)
-            {
+        foreach($lang as $row){
+            
+            if($row['id'] === $this->userId){
                 $response[] = $row['lang'];
             }
         }
             
-        $this -> languages = $response;
+        $this->languages = $response;
             
         return 1;
     }
@@ -57,14 +62,13 @@ class Lang
         
     public static function addLanguage($lang, $id)
     {
-        if($lang == '')
-        {
+        if($lang == ''){
             echo 'Missing parameter - language!';
             return 0;
         }
             
-        try
-        {
+        try{
+            
             $file = '../json/lang.json';
             $languages = json_decode(file_get_contents($file,true),true);
 
@@ -74,9 +78,8 @@ class Lang
 
             echo 'Success!';
                 
-        } 
-        catch (Exception $ex) 
-        {
+        }
+        catch (Exception $ex){
             echo 'Failed';
         }
     }
@@ -87,10 +90,8 @@ class Lang
         $languages = json_decode(file_get_contents($file,true),true);
         $deleted = false;
             
-        foreach($languages as $key => $language)
-        {
-            if($language['lang'] == $deleteLanguage && $language['id'] == (int)$id) 
-            {
+        foreach($languages as $key => $language){
+            if($language['lang'] == $deleteLanguage && $language['id'] == (int)$id){
                 unset($languages[$key]);
                 $deleted = true;
             }
@@ -98,12 +99,10 @@ class Lang
             
         file_put_contents($file, json_encode($languages),FILE_USE_INCLUDE_PATH);
             
-        if($deleted) 
-        {
+        if($deleted){
             echo 'Success!';
         }
-        else
-        {
+        else{
             echo 'Nothing found for remove!';
         }
     }

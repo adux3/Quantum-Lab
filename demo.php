@@ -6,20 +6,18 @@ require '../class/Lang.php';
 use People\People as People;
 use Lang\Lang as Lang;
 
-if(!isset($_SERVER['argv'][1]))
-{
+if(!isset($_SERVER['argv'][1])){
     echo 'Parameter missing!';
     die();
 }
 
-switch($_SERVER['argv'][1])
-{
+switch($_SERVER['argv'][1]){
+    
     case 'list':
         
         $allPeople = People::getAllPerson();
         
-        foreach($allPeople as $row)
-        {
+        foreach($allPeople as $row){
             echo $row->getPersonData();
         }
         
@@ -27,8 +25,7 @@ switch($_SERVER['argv'][1])
         
     case 'find':
         
-        foreach(People::findPeopleByName($_SERVER['argv'][2]) as $row)
-        {
+        foreach(People::findPeopleByName($_SERVER['argv'][2]) as $row){
             echo $row->getPersonData();
         }
         
@@ -38,18 +35,15 @@ switch($_SERVER['argv'][1])
     
         $languages = null;
         
-        foreach($_SERVER['argv'] as $key => $row)
-        {
-            if($key > 1)
-            {
+        foreach($_SERVER['argv'] as $key => $row){
+            if($key > 1){
                 $languages[] = $row;
             }
         }
         
         $people = People::getPersonWithLang($languages);
         
-        foreach ($people as $row)
-        {
+        foreach ($people as $row){
             echo $row->getPersonData();
         }
     
@@ -61,9 +55,7 @@ switch($_SERVER['argv'][1])
         $lastName = null;
         $languages = null;
         
-        
-        foreach($_SERVER['argv'] as $key => $row)
-        {
+        foreach($_SERVER['argv'] as $key => $row){
             if($key === 2) $firstName = $row;
             if($key === 3) $lastName = $row;
             if($key > 3) $languages[] = $row;

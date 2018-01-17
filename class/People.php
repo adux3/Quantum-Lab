@@ -13,17 +13,16 @@ class People
 
     public function __construct($id,$firstName,$lastName)
     {
-        $this -> id = $id;
-        $this -> firstName = $firstName;
-        $this -> lastName = $lastName;
+        $this->id = $id;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
     }
 
     public function getPersonData()
     {
-        $Lang = new Lang($this -> id);    
+        $Lang = new Lang($this->id);    
             
-            
-        return $this -> id.'.'.$this -> firstName.' '.$this -> lastName.' - '. $Lang -> getPersonLanguages()."\n";
+        return $this->id.'.'.$this->firstName.' '.$this->lastName.' - '. $Lang->getPersonLanguages()."\n";
     }
     
     private static function getNewID()
@@ -53,8 +52,7 @@ class People
         $people = json_decode(file_get_contents($file,true),true);
         $response = null;
             
-        foreach($people as $person)
-        {
+        foreach($people as $person){
             $response[] = new People($person['id'],$person['imie'], $person['nazwisko']);
         }
             
@@ -65,18 +63,19 @@ class People
     {
         $people = People::getAllPerson();
             
-        foreach($people as $person)
-        {
+        foreach($people as $person){
             $filtr_ok = true;
                
-            foreach($languages as $row)
-            {
-                $Lang = new Lang($person -> id);
-                if(!$Lang -> checkIfKnowLang($row)) $filtr_ok = false;
+            foreach($languages as $row){
+                
+                $Lang = new Lang($person->id);
+                
+                if(!$Lang -> checkIfKnowLang($row)){
+                    $filtr_ok = false;
+                }   
             }
                
-            if($filtr_ok) 
-            {
+            if($filtr_ok){
                 $response[] = $person;
             }
         }
@@ -90,11 +89,11 @@ class People
             
         $response = null;
             
-        foreach($people as $person)
-        {
-            $name = $person -> firstName. ' '. $person->lastName;
-            if (strpos($name, $find) !== false) 
-            {
+        foreach($people as $person){
+            
+            $name = $person->firstName. ' '. $person->lastName;
+            
+            if (strpos($name, $find) !== false){
                 $response[] = $person;
             }
         }
@@ -114,11 +113,10 @@ class People
             
         $file2 = '../json/lang.json';
         $langList = json_decode(file_get_contents($file2,true),true);
-        foreach($languages as $lang)
-        {
+        
+        foreach($languages as $lang){
             array_push($langList,['id' => $new_id, 'lang' => strtolower($lang)]);
         }
-            
             
         file_put_contents($file2, json_encode($langList),FILE_USE_INCLUDE_PATH);
             
@@ -132,10 +130,8 @@ class People
         $file = "../json/people.json";
         $people = json_decode(file_get_contents($file,true),true);
             
-        foreach($people as $key => $person)
-        {
-            if($person['id'] == $id)
-            {
+        foreach($people as $key => $person){
+            if($person['id'] == $id){
                 unset($people[$key]);
             }
         }
@@ -145,14 +141,14 @@ class People
         $file2 = '../json/lang.json';
         $languages = json_decode(file_get_contents($file2,true),true);
             
-        foreach($languages as $key => $lang)
-        {
-            if($lang['id'] == $id)
-            {
+        foreach($languages as $key => $lang){
+            if($lang['id'] == $id){
                 unset($lang[$key]);
             }
         }
             
         file_put_contents($file2, json_encode($languages),FILE_USE_INCLUDE_PATH);
+        
+        return 1;
     }
 }
